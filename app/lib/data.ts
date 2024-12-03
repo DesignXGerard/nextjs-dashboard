@@ -94,7 +94,7 @@ export async function fetchFilteredInvoices(
 	const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
 	try {
-		const invoices = await sql<InvoicesTable>`
+		const invoices = await db.sql<InvoicesTable>`
       SELECT
         invoices.id,
         invoices.amount,
@@ -124,7 +124,7 @@ export async function fetchFilteredInvoices(
 
 export async function fetchInvoicesPages(query: string) {
 	try {
-		const count = await sql`SELECT COUNT(*)
+		const count = await db.sql`SELECT COUNT(*)
     FROM invoices
     JOIN customers ON invoices.customer_id = customers.id
     WHERE
@@ -145,7 +145,7 @@ export async function fetchInvoicesPages(query: string) {
 
 export async function fetchInvoiceById(id: string) {
 	try {
-		const data = await sql<InvoiceForm>`
+		const data = await db.sql<InvoiceForm>`
       SELECT
         invoices.id,
         invoices.customer_id,
@@ -170,7 +170,7 @@ export async function fetchInvoiceById(id: string) {
 
 export async function fetchCustomers() {
 	try {
-		const data = await sql<CustomerField>`
+		const data = await db.sql<CustomerField>`
       SELECT
         id,
         name
@@ -188,7 +188,7 @@ export async function fetchCustomers() {
 
 export async function fetchFilteredCustomers(query: string) {
 	try {
-		const data = await sql<CustomersTableType>`
+		const data = await db.sql<CustomersTableType>`
 		SELECT
 		  customers.id,
 		  customers.name,
